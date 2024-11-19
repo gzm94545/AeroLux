@@ -1,0 +1,103 @@
+STARLUX-Token/
+├── README.md
+├── contracts/
+│   ├── STARLUXToken.sol
+│   ├── TokenBurnMechanism.sol
+├── docs/
+│   ├── token-burning.md
+│   ├── whitepaper.pdf
+├── tests/
+│   ├── test-burn.js
+├── scripts/
+│   ├── interact-burn.js
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract STARLUXToken is ERC20 {
+    address public owner;
+
+    constructor(uint256 initialSupply) ERC20("STARLUX Token", "STX") {
+        _mint(msg.sender, initialSupply);
+        owner = msg.sender;
+    }
+
+    // Modifier to restrict function access to the owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only owner can call this function");
+        _;
+    }
+
+    // Function to burn tokens from the owner's account
+    function burn(uint256 amount) public onlyOwner {
+        _burn(msg.sender, amount);
+    }
+
+    // Function to allow users to burn their own tokens
+    function burnFrom(address account, uint256 amount) public {
+        _burn(account, amount);
+    }
+}
+# Token Burning Mechanism 🔥
+
+The STARLUX token project incorporates a token-burning mechanism to create a deflationary model, enhancing scarcity and supporting long-term value growth.
+
+## How It Works
+1. **Owner-Initiated Burns**:
+   - The owner (STARLUX) can burn tokens from the treasury to reduce the total supply.
+   - This can be done during periodic token burns or milestones.
+
+2. **User-Initiated Burns**:
+   - Users can voluntarily burn their tokens to contribute to the ecosystem.
+   - Use cases include burning tokens for premium services, exclusive access, or loyalty rewards.
+
+## Benefits of Burning
+- **Scarcity**: Reduces the circulating supply, increasing the token's value over time.
+- **Deflationary Model**: Encourages long-term holding by reducing supply.
+- **Community Engagement**: Users actively participate in supporting the token economy.
+
+## Example Usage in Solidity
+To burn tokens as the owner:
+```solidity
+STARLUXToken.burn(1000 * 10**18);
+STARLUXToken.burnFrom(userAddress, 500 * 10**18);
+
+---
+
+### **4. Testing the Burning Mechanism**
+Include a dedicated test file (`test-burn.js`) to verify the burning functionality.
+
+#### **Sample JavaScript Test: `test-burn.js`**
+```javascript
+const { expect } = require("chai");
+
+describe("STARLUX Token Burning", function () {
+    let Token, starluxToken, owner, addr1;
+
+    beforeEach(async function () {
+        Token = await ethers.getContractFactory("STARLUXToken");
+        [owner, addr1] = await ethers.getSigners();
+        starluxToken = await Token.deploy(1000000); // Initial supply: 1M
+        await starluxToken.deployed();
+    });
+
+    it("Should burn tokens from the owner's account", async function () {
+        await starluxToken.burn(1000); // Burn 1000 tokens
+        const remainingSupply = await starluxToken.totalSupply();
+        expect(remainingSupply).to.equal(999000); // 1M - 1000
+    });
+
+    it("Should allow users to burn their own tokens", async function () {
+        await starluxToken.transfer(addr1.address, 5000); // Transfer 5000 tokens to addr1
+        await starluxToken.connect(addr1).burnFrom(addr1.address, 2000); // Burn 2000 tokens
+        const remainingBalance = await starluxToken.balanceOf(addr1.address);
+        expect(remainingBalance).to.equal(3000); // 5000 - 2000
+    });
+});
+## 🔥 Token Burning Feature
+STARLUX Token includes a deflationary mechanism to enhance value over time:
+- **Owner-Initiated Burns**: STARLUX will periodically burn tokens to reduce supply.
+- **User-Initiated Burns**: Token holders can voluntarily burn tokens for exclusive benefits or loyalty rewards.
+
+Learn more in our [Token Burning Documentation](./docs/token-burning.md).
