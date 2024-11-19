@@ -1,0 +1,48 @@
+AEROLUX-Token/
+├── README.md
+├── contracts/
+│   ├── STARLUXToken.sol
+│   ├── StakingContract.sol
+│   ├── TokenBurnMechanism.sol
+├── docs/
+│   ├── whitepaper.pdf
+│   ├── tokenomics.md
+│   ├── faq.md
+├── scripts/
+│   ├── deploy.js
+│   ├── interact.js
+├── tests/
+│   ├── test-token.js
+│   ├── test-staking.js
+├── community/
+│   ├── contributing.md
+│   ├── code-of-conduct.md
+│   ├── roadmap.md
+├── LICENSE
+└── .gitignore
+
+# AEROLUX Token Project 🌟
+
+Welcome to the official repository of AEROLUX Tokens! 🚀  
+STARLUX tokens are designed to revolutionize the travel experience by integrating blockchain technology into the aviation industry.
+
+## Features
+- **Utility**: Use tokens for flight upgrades, additional baggage allowance, and loyalty rewards.
+- **Staking**: Earn rewards by staking your STARLUX tokens.
+- **Deflationary Mechanism**: A portion of transaction fees are burned, increasing token scarcity.
+
+## Documentation
+- [Whitepaper](./docs/whitepaper.pdf)
+- [Tokenomics](./docs/tokenomics.md)
+- [FAQ](./docs/faq.md)
+
+## Smart Contracts
+- [AEROLUXToken.sol](./contracts/STARLUXToken.sol)
+- [StakingContract.sol](./contracts/StakingContract.sol)
+
+## Contribute
+We welcome contributions! Check out our [contribution guide](./community/contributing.md) to get started.
+
+## License
+This project is licensed under the [MIT License](./LICENSE).
+
